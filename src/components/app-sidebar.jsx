@@ -44,6 +44,10 @@ const data = {
           title: "Hiring requests",
           url: "/dashboard/admin/employers/hiring-requests",
         },
+         {
+          title: "Companies",
+          url: "/dashboard/admin/companies",
+        },
       ],
     },
      {
@@ -70,7 +74,7 @@ const data = {
       items: [
         {
           title: "Users",
-          url: "#",
+          url: "/dashboard/admin/users",
         },
         {
           title: "Team",
