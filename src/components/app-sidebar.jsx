@@ -1,7 +1,4 @@
-import * as React from "react"
-
-import { SearchForm } from "@/components/search-form"
-import { VersionSwitcher } from "@/components/version-switcher"
+import * as React from "react" 
 import {
   Sidebar,
   SidebarContent,
@@ -14,7 +11,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import Link from "next/link"
+import Link from "next/link" 
 
 // This is sample data.
 const data = {
@@ -25,75 +22,88 @@ const data = {
       url: "/dashboard/admin",
       items: [
         {
+          icon:"House",
           title: "Home",
           url: "/dashboard/admin",
         },
         {
+          icon:"Tag",
           title: "Categories",
           url: "/dashboard/admin/category",
         },
+        
         {
+          icon:"Users",
           title: "Talents",
-          url: "/dashboard/admin/talents",
+          url: "/dashboard/admin/talents-connect/talents",
         },
         {
+          icon:"BriefcaseBusiness",
           title: "Employers",
-          url: "/dashboard/admin/employers",
+          url: "/dashboard/admin/talents-connect/employers",
         },
         {
+          icon:"PhoneIncoming",
           title: "Hiring requests",
-          url: "/dashboard/admin/employers/hiring-requests",
+          url: "/dashboard/admin/talents-connect/employers/hiring-requests",
+        },
+        {
+          icon:"Building2",
+          title: "Companies",
+          url: "/dashboard/admin/talents-connect/companies",
         },
       ],
     },
-     {
+    {
       title: "Communications",
       url: "#",
       items: [
         {
+          icon:"Rss",
           title: "News and Updates",
           url: "#",
         },
         {
+          icon:"Megaphone",
           title: "Marketing",
           url: "#",
         },
-         {
+        {
+          icon:"Calendar",
           title: "Events",
           url: "#",
         },
       ],
     }, 
-       {
+      {
       title: "Others",
       url: "#",
       items: [
         {
+          icon:"Users",
           title: "Users",
-          url: "#",
+          url: "/dashboard/admin/users",
         },
         {
+          icon:"Boxes",
           title: "Team",
           url: "#",
         },
         {
+          icon:"Settings",
           title: "Settings",
           url: "#",
         },
         {
+          icon:"ArrowLeftRight",
           title: "Transactions",
           url: "/dashboard/admin/payments",
         },
         {
+          icon:"ClipboardPlus",
           title: "Reports",
           url: "#",
-        },
-        ,
-        {
-          title: "Tickets",
-          url: "#",
-        }
-        
+        }        
       ],
     }, 
   ],
@@ -118,7 +128,9 @@ export function AppSidebar({
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild isActive={item.isActive}>
-                      <Link href={item.url}>{item.title}</Link>
+                      <Link href={item.url} className="font-semibold text-lg">
+                        {React.createElement(require("lucide-react")[item.icon])} {item.title}
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
