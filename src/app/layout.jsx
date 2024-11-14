@@ -1,14 +1,26 @@
- 
 import "./globals.css";
-import { AuthProvider } from "@/context/AuthContext";
- 
+// import { AuthProvider } from "@/context/AuthContext";
+import { ConfigProvider, Button } from 'antd';
+import { Toaster } from "@/components/ui/toaster"
+import ClientHydrate from "./components/ClientHydrate";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className=""
+        className="bg-white mb-12 dark:bg-gray-900"
       >
-        <AuthProvider>{children}</AuthProvider>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: '#fa8c16',
+            },
+          }}
+        >
+              <ClientHydrate /> 
+        {children} 
+          <Toaster />
+        </ConfigProvider>
       </body>
     </html>
   );
