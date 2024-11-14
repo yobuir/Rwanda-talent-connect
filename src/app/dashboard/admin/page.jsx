@@ -1,25 +1,25 @@
 "use client"
-import Charts from '@/app/components/admin/Charts'
-import CustomCard from '@/app/components/admin/CustomCard'
-import CustomAvatar from '@/app/components/CustomAvatar'
+import Charts from '@/app/components/talentConnect/admin/Charts'
+import CustomCard from '@/app/components/talentConnect/admin/CustomCard'
+import CustomAvatar from '@/app/components/talentConnect/CustomAvatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
-import React from 'react'
-import PendingProfile from './talents/pending-profiles/PendingProfile'
+import React from 'react' 
+import PendingProfile from './talents-connect/talents/pending-profiles/PendingProfile'
 
 function page() {
   return ( 
     <div className='flex flex-1 flex-col gap-4 p-4 w-full'>
       <div className='grid grid-cols-1 lg:grid-cols-4 gap-4 flex-wrap'>
-        <CustomCard/>
+        {/* <CustomCard/>
         <CustomCard/>
         <CustomCard/> 
-        <CustomCard/> 
+        <CustomCard/>  */}
       </div>
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 flex-wrap'>
         <div className='flex flex-1 flex-col gap-4 w-full'>
-          <Charts/>
+          {/* <Charts/> */}
         </div>
         <div className='flex flex-1 flex-col gap-4 w-full'>
           <div className='flex flex-1 flex-col gap-4 w-full'>
