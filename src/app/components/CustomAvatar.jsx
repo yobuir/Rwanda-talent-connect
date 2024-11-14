@@ -1,11 +1,11 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-function CustomAvatar({styles}) {
+import { getInitialsLetters } from '@/lib/getInitialsNames';
+function CustomAvatar({styles, ...props}) {
   return (
     <Avatar className={styles}>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>CN</AvatarFallback>
+        <AvatarImage className="object-fill" src={props?.image} alt={props?.name} />
+        <AvatarFallback>{getInitialsLetters(props?.name) || ''}</AvatarFallback>
     </Avatar>
   );
 }
