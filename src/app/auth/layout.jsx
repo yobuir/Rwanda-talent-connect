@@ -1,7 +1,8 @@
 
-export default function RootLayout({ children }) {
+export default function Layout({ children }) {
   return ( 
       <div className="relative flex h-screen items-center justify-center bg-white">
+        
           <div
             className="flex  w-full h-full flex-row gap-8 row-start-2 items-center sm:items-start"
           >
