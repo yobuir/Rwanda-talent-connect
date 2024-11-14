@@ -12,7 +12,7 @@ export default function ZoomableImage({
       <DialogTrigger  >
         <Image
           src={src}
-          alt={alt || ''} 
+          alt="Profile image" 
           className={className}
           width={500}
           height={100}
@@ -22,7 +22,7 @@ export default function ZoomableImage({
         <DialogTitle className="p-0 m-0">   
         </DialogTitle>
         <div className="relative h-[calc(100vh-220px)] w-full overflow-clip rounded-md bg-transparent shadow-md">
-          <Image src={src} fill alt={alt || ''} className="h-full w-full object-contain" />
+          <Image src={src} fill  alt="Profile image" className="h-full w-full object-contain" />
         </div>
       </DialogContent>
     </Dialog>
