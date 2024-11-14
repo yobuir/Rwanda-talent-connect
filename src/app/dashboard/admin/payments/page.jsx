@@ -47,9 +47,9 @@ function page() {
           </Breadcrumb>
             <div className='flex-1'>
                 <h1 className='text-2xl font-bold'>
-                    Transactions
+                    Transaction
                 </h1>
-                <p className='text-gray-500'>List of transaction histories</p>
+                <p className='text-gray-500'>List of transaction histories of payment</p>
             </div>
             <div className="">
                 <DataTable columns={columns} data={data} />
