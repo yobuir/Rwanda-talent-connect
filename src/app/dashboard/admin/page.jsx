@@ -1,52 +1,38 @@
 "use client"
-import Charts from '@/app/components/admin/Charts'
-import CustomCard from '@/app/components/admin/CustomCard'
-import CustomAvatar from '@/app/components/CustomAvatar'
+import Charts from '@/app/components/talentConnect/admin/Charts'
+import CustomCard from '@/app/components/talentConnect/admin/CustomCard'
+import CustomAvatar from '@/app/components/talentConnect/CustomAvatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
-import React from 'react'
-import PendingProfile from './talents/pending-profiles/PendingProfile'
+import React, { useState } from 'react' 
+import PendingProfile from './talents-connect/talents/pending-profiles/PendingProfile'
+import { useSession } from 'next-auth/react';
+import Skeleton from 'react-loading-skeleton';
+import { useRouter } from 'next/navigation';
 
-function page() {
+function Page() {
+
+   const route=useRouter()
+  const [loading, setLoading] = useState(true);
+  const { data: session, status } = useSession();
+  if(session?.user?.role ==="talent" || session?.user?.role ==="employer"){
+    route.push(`/talent-connect/talents`)
+  }
+
+   if (loading) {
+      return <div className="flex justify-center items-center h-screen"><Skeleton active /></div>;
+    }
   return ( 
     <div className='flex flex-1 flex-col gap-4 p-4 w-full'>
       <div className='grid grid-cols-1 lg:grid-cols-4 gap-4 flex-wrap'>
-        <CustomCard/>
-        <CustomCard/>
-        <CustomCard/> 
-        <CustomCard/> 
-      </div>
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 flex-wrap'>
-        <div className='flex flex-1 flex-col gap-4 w-full'>
-          <Charts/>
-        </div>
-        <div className='flex flex-1 flex-col gap-4 w-full'>
-          <div className='flex flex-1 flex-col gap-4 w-full'>
-            <Card className='shadow-sm'>
-              <CardHeader>
-                <CardTitle> 
-                  <div className='flex justify-between'>
-                    <p className='font-bold text-sm'>Pending verifications</p>
-                    <Link href="/dashboard/admin/talents/pending-profiles" className="flex  leading-none">
-                        View All
-                      </Link> 
-                    </div>
-                </CardTitle>
-                <CardDescription> Pending users for verification </CardDescription> 
-              </CardHeader>
-              <CardContent> 
-                <div className='flex flex-col space-y-4'>
-                  <PendingProfile/>
-                </div> 
-              </CardContent> 
-            </Card> 
-          </div>
-        </div> 
-      </div>
+          <CustomCard total={125} title="Companies"  description="All companies " link="/dashboard/admin/talents-connect/companies"  /> 
+          <CustomCard total={677} title="Talents"  description="All talents " link="/dashboard/admin/talents-connect/talents"  /> 
+          <CustomCard total={98} title="Users"  description="All users " link="/dashboard/admin/users"  /> 
+      </div> 
     </div>
 
   )
 }
 
-export default page
+export default Page
