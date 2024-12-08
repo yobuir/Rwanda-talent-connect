@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node init && next dev",
+    "build": "node init && next build",
+    "start": "node init && next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -35,7 +35,7 @@
     "lucide-react": "^0.456.0",
     "moment": "^2.30.1",
     "next": "15.0.3",
-    "next-auth": "^4.24.10", 
+    "next-auth": "^4.24.10",
     "nookies": "^2.0.6",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
