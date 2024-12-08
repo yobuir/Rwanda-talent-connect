@@ -4,6 +4,7 @@ import { ChevronLeft, FileUp, Handshake, ImageUp, LockKeyholeIcon, Star, UserPen
 import NavBar from '@/app/components/Header/NavBar';
 
 import { Card, CardContent } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'; 
 import GBasicInformation from './components/General/GBasicInformation'; 
@@ -34,6 +35,8 @@ function Page() {
   if (loading) {
     return <div className="flex justify-center items-center h-screen"><Skeleton active /></div>;
   }
+
+
   return ( 
       <div className='relative bg-white'>
         <NavBar/>
@@ -43,6 +46,7 @@ function Page() {
               <Link href='/talents' className='flex gap-2 items-center'>
                 <span className='text-orange-500 bg-orange-500/20 p-2 rounded-full hover:bg-orange-500 hover:text-white '> <ChevronLeft size={26} /></span>
                 <span className='text-xl font-semibold'>Explore talents </span>
+                <span className='text-xl font-semibold'>Nate Bruzdzinski </span>
               </Link>
               <div className='flex gap-4 justify-end text-right flex-1'>
                 <Button asChild variant="outline">

@@ -53,7 +53,7 @@ export function CharacterInformation({user}) {
     setEyeColor(user?.talentProfile?.eyeColor || '')
     setHairColor(user?.talentProfile?.hairColor  || '')
     setBodyType(user?.talentProfile?.bodyType  || '')
-    if (user?.talentProfile.gender != null || user?.talentProfile.age != null || user?.talentProfile?.height ||
+    if (user?.talentProfile?.gender != null || user?.talentProfile?.age != null || user?.talentProfile?.height ||
         user?.talentProfile?.weight ||
         user?.talentProfile?.skinColor ||
         user?.talentProfile?.eyeColor ||
