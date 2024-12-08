@@ -6,12 +6,12 @@ export async function getUser() {
     const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/current-user`);
 
     const user = response?.data?.data;  
-   
+    console.log(user);
     return user;
   } catch (error) {
-     if(error.response?.data.code ==400){
-        window.location.href = '/auth/login';
-    }
+    //  if(error.response?.data.code ==400){
+    //     window.location.href = '/auth/login';
+    // }
     return error.response?.data || error.message;
   }
 }

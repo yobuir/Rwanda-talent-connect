@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { Suspense, useState, useEffect, useCallback } from 'react';
 import NavBar from '../components/Header/NavBar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
@@ -16,12 +16,12 @@ function Page() {
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchCompanies = async () => {
+  const fetchCompanies = useCallback(async () => {
     setLoading(true);
     try {
       const fetchedCompanies = await getAllCompaniesByOwner(session?.user?.id, 2);
       setCompanies(fetchedCompanies || []);
-    } catch (error) { 
+    } catch (error) {
       toast({
         variant: 'destructive',
         title: 'Error fetching companies',
@@ -30,7 +30,7 @@ function Page() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [session?.user?.id]);
 
   useEffect(() => {
     if (session?.user?.id) {
@@ -38,7 +38,7 @@ function Page() {
     }
   }, [session?.user?.id, fetchCompanies]);
 
-    const currentCompanies = companies?.slice(0, 3);
+  const currentCompanies = companies?.slice(0, 3);
 
   return (
     <div className="relative bg-white">

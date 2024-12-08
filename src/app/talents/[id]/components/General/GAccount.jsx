@@ -133,7 +133,7 @@ function GAccount({ user }) {
                   <AlertTitle>Profile not verified</AlertTitle>
                   <AlertDescription>
                     Your profile is not verified. Please if it&apos;s taking longer than usual, contact support for assistance.
-                    <Link className='underline text-orange-500' href={process.env.SUPPORT_EMAIL}>{process.env.SUPPORT_EMAIL}</Link>
+                    <Link className='underline text-orange-500' href={process.env.SUPPORT_EMAIL??'support@example.com'}>{process.env.SUPPORT_EMAIL??'support@example.com'}</Link>
                   </AlertDescription>
                 </Alert>
                 ):(

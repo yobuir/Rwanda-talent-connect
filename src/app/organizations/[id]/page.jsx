@@ -1,8 +1,8 @@
 'use client';
-import React, { useEffect, useState } from 'react';  
-import { Building, Calendar,MessageSquareWarning,ShieldEllipsisIcon,Users, Vote } from 'lucide-react'; 
-import NavBar from '@/app/components/Header/NavBar';
 
+import React, { useEffect, useState, useCallback } from 'react';  
+import { Building, Calendar, MessageSquareWarning, ShieldEllipsisIcon, Users, Vote } from 'lucide-react'; 
+import NavBar from '@/app/components/Header/NavBar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';  
@@ -18,9 +18,12 @@ import { getCompany } from '@/utils/companies/client/getCompany';
 import Skeleton from 'react-loading-skeleton';
 import CompanyDelete from '../components/CompanyDelete';
 import NotFound from '@/app/not-found';
+
 function Page({ params }) { 
   const [companyId, setCompanyId] = useState();
   const [company, setCompany] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const { data: session } = useSession(); 
 
     useEffect(() => { 
         async function fetchParams() {
@@ -29,96 +32,95 @@ function Page({ params }) {
             }
           fetchParams();
       }, [params]);
-    const { data: session, status } = useSession();
-    const [loading, setLoading] = useState(true);
+  // Memoized function to fetch company data
+  const fetchCompany = useCallback(async (id) => {
+    setLoading(true);
+    try {
+      const fetchedCompany = await getCompany(id);
+      setCompany(fetchedCompany || {});
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error fetching company',
+        description: error.message || 'Unable to fetch company details. Please try again later.',
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+ 
 
+  // Effect to fetch company when companyId changes
+  useEffect(() => {
+    if (companyId) {
+      fetchCompany(companyId);
+    }
+  }, [companyId, fetchCompany]);
 
-    const fetchCompany = async () => {
-      setLoading(true);
-      try {
-        const fetchedCompany = await getCompany(companyId);
-        setCompany(fetchedCompany || {}); 
-      } catch (error) { 
-        toast({
-          variant: 'destructive',
-          title: 'Error fetching company',
-          description: error.message || 'Unable to fetch company details. Please try again later.',
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
+  if (company?.code === 404) {
+    return <NotFound />;
+  }
 
-    useEffect(() => {
-      if (companyId) {
-        fetchCompany();
-      }
-    }, [companyId,fetchCompany]);
-
-if(company?.code == 404){
-  return (
-    <>
-      <NotFound/>
-    </>
-  )
-}
-
-if(company?.status != 'active'){
-  return (
-      <div className='relative bg-white'>
+  if (company?.status !== 'active') {
+    return (
+      <div className="relative bg-white">
         <NavBar />
-        <div className='flex min-h-[60vh] justify-center items-center  p-5'>
-          <div className='flex flex-col justify-center items-center gap-5'>
-            <div className='text-orange-500 text-5xl bg-orange-500/20 p-3 rounded-full
-            '>
-              <ShieldEllipsisIcon size={60}/>
+        <div className="flex min-h-[60vh] justify-center items-center p-5">
+          <div className="flex flex-col justify-center items-center gap-5">
+            <div className="text-orange-500 text-5xl bg-orange-500/20 p-3 rounded-full">
+              <ShieldEllipsisIcon size={60} />
             </div>
-            <h1 className='font-semibold text-lg text-center'>We&apos;re currently verifying your organization information and will be available soon .</h1>
-              <Alert>
-                <AlertTitle>organization not verified</AlertTitle>
-                <AlertDescription>
-                  Your organization is not verified. Please if it&apos;s taking longer than usual, contact support for assistance.
-                  <Link className='underline text-orange-500' href={process.env.SUPPORT_EMAIL?? 'Ht6bA@example.com'}>{process.env.SUPPORT_EMAIL??'Ht6bA@example.com'}</Link>
-                </AlertDescription>
-              </Alert>
-              <div className='flex flex-wrap gap-3 text-orange-500'> 
-                <Link href={`/talents`}>Explore talents</Link>
-              </div>
+            <h1 className="font-semibold text-lg text-center">
+              We&apos;re currently verifying your organization information and will be available soon.
+            </h1>
+            <Alert>
+              <AlertTitle>Organization not verified</AlertTitle>
+              <AlertDescription>
+                Your organization is not verified. If it&apos;s taking longer than usual, contact support for assistance.
+                <Link className="underline text-orange-500" href={process.env.SUPPORT_EMAIL || 'support@example.com'}>
+                  {process.env.SUPPORT_EMAIL || 'support@example.com'}
+                </Link>
+              </AlertDescription>
+            </Alert>
+            <div className="flex flex-wrap gap-3 text-orange-500">
+              <Link href={`/talents`}>Explore talents</Link>
+            </div>
           </div>
         </div>
-    </div>
-  )
-}
-  return ( 
-      <div className='relative bg-white'>
-        <NavBar />
-        <div className='flex flex-col lg:flex-row gap-3'>
-          <div className=" lg:px-12 p-2 pt-0 lg:max-w-7xl w-full mt-0 lg:mx-auto lg:min-w-[80%]  flex flex-col gap-6">
-            <div className='flex lg:flex-row flex-col flex-wrap gap-4 mt-0 pt-0'>
-              <CompanyProfile user={session?.user} company={company} loading={loading} />
-              <div className='flex flex-col gap-4  w-full'>
-                <div className='lg:flex hidden flex-col gap-3 lg:w-[67%] '>
-                  <Alert>
-                    <MessageSquareWarning className="h-4 w-4" />
-                    <AlertTitle>Events!</AlertTitle>
-                    <AlertDescription className="flex flex-col gap-2"> 
-                      Did you know that you can create events for your company ? 
-                      <Link href='/dashboard/events' className='text-orange-500 font-semibold'>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative bg-white">
+      <NavBar />
+      <div className="flex flex-col lg:flex-row gap-3">
+        <div className="lg:px-12 p-2 pt-0 lg:max-w-7xl w-full mt-0 lg:mx-auto lg:min-w-[80%] flex flex-col gap-6">
+          <div className="flex lg:flex-row flex-col flex-wrap gap-4 mt-0 pt-0">
+            <CompanyProfile user={session?.user} company={company} loading={loading} />
+            <div className="flex flex-col gap-4 w-full">
+              <div className="lg:flex hidden flex-col gap-3 lg:w-[67%]">
+                <Alert>
+                  <MessageSquareWarning className="h-4 w-4" />
+                  <AlertTitle>Events!</AlertTitle>
+                  <AlertDescription>
+                    Did you know that you can create events for your company? 
+                    <Link href="/dashboard/events" className="text-orange-500 font-semibold">
                       Click here to create an event
-                      </Link>
-                    </AlertDescription>
-                  </Alert>
-                  <Alert>
-                    <MessageSquareWarning className="h-4 w-4" />
-                    <AlertTitle>Voting!</AlertTitle>
-                    <AlertDescription className="flex flex-col gap-2">
-                      Did you know that you can setup  voting event for free ? 
-                      <Link href='/dashboard/events' className='text-orange-500 font-semibold'>
+                    </Link>
+                  </AlertDescription>
+                </Alert>
+                <Alert>
+                  <MessageSquareWarning className="h-4 w-4" />
+                  <AlertTitle>Voting!</AlertTitle>
+                  <AlertDescription>
+                    Did you know that you can set up a voting event for free? 
+                    <Link href="/dashboard/events" className="text-orange-500 font-semibold">
                       Click here to start voting  
-                      </Link>
-                    </AlertDescription>
-                  </Alert>
-                </div>
+                    </Link>
+                  </AlertDescription>
+                </Alert>
+              </div>
 
                 <Card className="shadow-none border  border-gray-200 relative w-full">
                   <CardContent className="flex flex-col p-6">
