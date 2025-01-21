@@ -34,24 +34,19 @@ function Page() {
     }
   };
 
-  // useEffect(() => {
-  //   if (session?.user?.id) {
-  //     fetchCompanies();
-  //   }
-  // }, [session?.user?.id]);
-
-    useEffect(() => {
+  useEffect(() => {
     if (session?.user?.id) {
       fetchCompanies();
     }
-  }, []);
+  }, [session?.user?.id]);
+
 
   const currentCompanies = companies?.slice(0, 3);
   if(session?.user?.role ==="talent"){
     route.push(`/talent-connect/talents/${session?.user?.id}`)
   }
   if (loading) {
-    return <div className="flex justify-center items-center h-screen"><Skeleton active /></div>;
+    return <div className="flex justify-center items-center h-screen"><Skeleton active /> Loading</div>;
   }
   return (
     <div className="relative bg-white">

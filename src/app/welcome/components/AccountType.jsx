@@ -19,8 +19,7 @@ function AccountType({ onRoleSelect }) {
         
         setLoading(true);
     
-        try {
-            console.log(role)
+        try { 
             const updateData = {};
             if (role) updateData.role = role;
         
@@ -28,6 +27,7 @@ function AccountType({ onRoleSelect }) {
                 updateData,
             );
             
+            console.log(response)
             if (response.code==200) { 
                 toast({
                     variant: "default",

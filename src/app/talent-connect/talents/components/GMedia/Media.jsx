@@ -6,13 +6,10 @@ import Skeleton from "antd/lib/skeleton";
 import { Image } from "antd";
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { X } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
-const Media = ({ talent,setShowMedia,setIsDrawerOpen }) => {
+const Media = ({ talent, }) => {
 
-    const  closeMedia =()=>{
-            setShowMedia(false)
-            setIsDrawerOpen(true)
-        }
     const [media, setMedia] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -52,30 +49,12 @@ const Media = ({ talent,setShowMedia,setIsDrawerOpen }) => {
     };
 
 
-    return (
-        <div className="bg-white backdrop-blur-md rounded-xl overflow-hidden w-full h-[100vh] flex flex-col items-center justify-center  fixed top-0 left-0 z-50 ">
-            <div className='w-full shadow-sm border-b p-2 bg-white gap-2'>
-                <div className="flex items-center gap-2 justify-between">
-                    <div className="flex items-center gap-2 justify-between">
-                    <Avatar className="w-10 h-10 ">
-                        <AvatarImage 
-                            src={talent.profileImage || "https://github.com/shadcn.png"} 
-                            alt={talent.fullName}
-                            className="object-cover"
-                        />
-                    </Avatar>
-                    <h2 className="text-2xl font-bold">{talent?.fullName}</h2>(
-                    <span className="text-gray-600 italic">{talent?.talentProfile?.headline?? 'Talent'}</span>)
-                </div>
-                <div className=''>
-                    <button className='flex gap-1 hover:text-red-600 cursor-pointer' onClick={closeMedia}>
-                        <X/> exit
-                    </button>
-                </div>
-                </div>
-            </div>
+    return ( 
+        <>
+           <Card className="shadow-none border border-dashed py-6 border-gray-200 relative ">
+                    <CardContent className="flex flex-col gap-4"> 
             <div 
-                className="h-[95vh] lg:w-1/2 overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
+                className="lg:w-full overflow-y-scroll-auto snap-y snap-mandatory scrollbar-hide"
                 onScroll={handleMediaScroll}
             >
                 {
@@ -97,7 +76,11 @@ const Media = ({ talent,setShowMedia,setIsDrawerOpen }) => {
                     />
                 ))}
             </div>
-        </div>
+            </CardContent>
+            </Card>
+        
+        </>
+      
     );
 };
 

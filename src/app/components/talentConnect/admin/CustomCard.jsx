@@ -11,7 +11,7 @@ function CustomCard({ title,description,link,total }) {
           <CardContent> 
             <div className='flex flex-col space-y-4'>
             <div className="text-2xl font-bold">{total}</div>
-            <Link href={link} className="flex gap-2 border-t pt-3  leading-none">
+            <Link href={link??'#link'} className="flex gap-2 border-t pt-3  leading-none">
               View All
               </Link> 
             </div> 

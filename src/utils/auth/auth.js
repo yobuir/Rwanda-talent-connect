@@ -1,9 +1,10 @@
 import axiosInstance from '@/lib/axios'; 
+import axios from 'axios';
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const Register = async (name,phone,email, password) => {
   try { 
-    const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, { fullName:name,phoneNumber:phone,email, password,role:"default" });
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, { fullName:name,phoneNumber:phone,email, password,role:"admin" });
     const { user } = response.data;  
     return { success: true, user };
   } catch (error) { 
@@ -37,10 +38,8 @@ export const authOptions = {
               password: credentials.password,
             }
           );
-
           if (response.status === 200 && response.data.status === "success") {
-            const { token, user } = response.data.data;
-
+            const { token, user } = response.data.data; 
             return {
               id: user._id,
               name: user.fullName,
@@ -54,12 +53,13 @@ export const authOptions = {
               updatedAt: user.updatedAt,
               role: user.role, 
               token,
+              talentProfile: user.talentProfile,
+              ratings: user.ratings,
             };
           } else {
             throw new Error(response.data.message || "Invalid credentials");
           }
-        } catch (error) {
-          console.error("Login error:", error.message);
+        } catch (error) { 
           return null;
         }
       },
@@ -84,6 +84,8 @@ export const authOptions = {
         token.createdAt = user.createdAt;
         token.updatedAt = user.updatedAt; 
         token.backendToken = user.token;
+        token.talentProfile = user.talentProfile;
+        token.ratings = user.ratings;
       }
       return token;
     },
@@ -100,12 +102,13 @@ export const authOptions = {
         deletedAt: token.deletedAt,
         createdAt: token.createdAt,
         updatedAt: token.updatedAt,
+        talentProfile: token.talentProfile,
+        ratings: token.ratings,
       };
       session.token = token.backendToken;  
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET, 
+  secret: process.env.NEXT_AUTH_SECRET, 
 };
 
- 

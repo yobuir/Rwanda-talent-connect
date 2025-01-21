@@ -3,10 +3,8 @@ import { NextResponse } from "next/server";
 import { getLoggedUser } from "./utils/auth/getLoggedUser";
 
 export async function middleware(req) {
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  console.log(token);
+  const token = await getToken({ req, secret: process.env.NEXT_AUTH_SECRET });
 
-  // Redirect unauthenticated users
   if (!token) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }
@@ -22,6 +20,9 @@ export async function middleware(req) {
   }
 
   const res = NextResponse.next(); 
+
+  // You can pass user data via headers or cookies if needed
+  res.headers.set('x-user-id', user._id);
 
   return res;
 }

@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input"
 import CategoryNew from "./Components/CategoryNew"
 
 export function DataTable ({
-  Columns,
+  columns,
   data,
 } ) {
 
@@ -23,7 +23,7 @@ export function DataTable ({
 
   const table = useReactTable({
     data,
-    Columns,
+    columns,
     getCoreRowModel: getCoreRowModel(), 
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
@@ -53,9 +53,9 @@ export function DataTable ({
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
+            {table?.getHeaderGroups()?.map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+                {headerGroup.headers?.map((header) => {
                   return (
                     <TableHead key={header.id}>
                       {header.isPlaceholder
@@ -72,12 +72,12 @@ export function DataTable ({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel()?.rows?.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) => (
+                  {row.getVisibleCells()?.map((cell) => (
                     <TableCell key={cell.id} className="capitalize">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>

@@ -29,9 +29,11 @@ function Page() {
   const loadCategories = async (page = 1, limit = 10) => {
     try {
       const data = await getCategories(page, limit);
+
       setCategories(data.categories || []);
       setMetadata(data.metadata || {});
     } catch (error) { 
+      console.log(error);
       toast({
         variant: 'destructive',
         title: 'Verification Failed',

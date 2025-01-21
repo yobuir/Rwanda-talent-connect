@@ -38,6 +38,7 @@ function Profile({ user }) {
             if (bio) updateData.bio = bio;
 
             const response = await UpdateUSer(updateData); 
+            console.log(response)
 
             if (response.status =='success') { 
                 toast({

@@ -68,9 +68,7 @@ function Page() {
 
                                             </div>
                                         </div>
-                                        <PendingProfile />
-                                        <PendingProfile />
-                                        <PendingProfile />
+                                        <PendingProfile /> 
                                     </div>
                                 </CardContent>
                             </Card>

@@ -49,18 +49,18 @@ function Page({ params }) {
       }
     };
 
-    // useEffect(() => {
-    //   if (companyId) {
-    //     fetchCompany();
-    //   }
-    // }, [companyId]);
-
-
     useEffect(() => {
       if (companyId) {
         fetchCompany();
       }
-    }, []);
+    }, [companyId]);
+
+
+    // useEffect(() => {
+    //   if (companyId) {
+    //     fetchCompany();
+    //   }
+    // }, []);
 
 if(company?.code == 404){
   return (

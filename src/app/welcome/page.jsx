@@ -16,7 +16,7 @@ import { toast, useToast } from '@/hooks/use-toast';
 
 function Page() {   
     const { data: session, status } = useSession();  
-   
+
     const user = session?.user || null; 
     const router = useRouter() 
     useEffect(() => {
@@ -75,9 +75,9 @@ function Page() {
             // Make the API call to update user data
             const response = await UpdateUSer(   
                 updateData
-            );
+            ); 
 
-            if (response.success) { 
+            if (response.code ==200) { 
                 toast({
                     variant: "default",
                     title: "Profile Updated",

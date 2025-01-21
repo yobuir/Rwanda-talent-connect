@@ -3,7 +3,7 @@ import { getSession } from 'next-auth/react';
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
-  timeout: 10000,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
 // Request interceptor
 axiosInstance.interceptors.request.use(
   async (config) => {
-    const session = await getSession();
+    const session = await getSession(); 
     if (session?.token) {
       config.headers.Authorization = `Bearer ${session.token}`;
     }

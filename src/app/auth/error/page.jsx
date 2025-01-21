@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
@@ -11,9 +12,9 @@ function ErrorContent() {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-2xl font-bold">Error</h1>
       <p className="text-red-500">{error || "Something went wrong."}</p>
-      <a href="/auth/signin" className="mt-4 text-blue-600 underline">
+      <Link href="/auth/signin" className="mt-4 text-blue-600 underline">
         Go back to Sign In
-      </a>
+      </Link>
     </div>
   );
 }
