@@ -19,7 +19,7 @@ export async function getUserById({id}) {
 export async function getUserByIdProfile({id}) {
   try {
     
-    const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`);
+    const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/users/get/${id}`);
 
     const user = response?.data;  
     return user;
