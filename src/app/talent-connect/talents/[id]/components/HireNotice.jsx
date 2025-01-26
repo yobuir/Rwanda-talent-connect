@@ -73,8 +73,7 @@ function HireNotice({ talent }) {
                     variant: "success",
                     title: "Request Sent" ,
                     description:"Request sent successfully",
-                });
-                setCurrentStep(3);
+                }); 
             } else { 
                 toast({
                     variant: "destructive",
