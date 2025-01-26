@@ -22,19 +22,19 @@ export default function Page({params}) {
     const [loading, setLoading] = useState(false);
     const [categoryName, setCategoryName] = useState('');
 
-    useEffect(() => { 
-    setLoading(true);
+    useEffect(() => {  
 
-      async function fetchParams() {
+        async function fetchParams() {
         const resolvedParams = await params; 
-        setUserId(resolvedParams?.id);  
-      }
-      fetchParams().finally(()=>setLoading(false))
+            setUserId(resolvedParams?.id);  
+            }
+        fetchParams()
     }, [params]);
 
 
   useEffect(() => {
     const fetchUser = async () => {
+        setLoading(true);
         try {
             const response = await getUserByIdProfile({ id: userId });
             if (!response) {
@@ -52,6 +52,8 @@ export default function Page({params}) {
                 title: 'Error fetching user data',
                 description: error.message || 'Unable to fetch user details. Please try again later.',
             });
+    }finally{
+        setLoading(false);
     }
     };
     fetchUser();
@@ -65,13 +67,9 @@ export default function Page({params}) {
         }
     }, [user?.talentProfile?.categoryId]);
 
-
-  console.log(user);
   if (loading) {
     return <div className="flex justify-center items-center h-screen"><Skeleton active /></div>;
-  }
-
-  if(!user?.isProfilePublished){
+  }else if(!user?.isProfilePublished){
     return <div className="flex justify-center items-center h-screen">Profile not available yet.</div>;
   }
 
@@ -129,7 +127,7 @@ export default function Page({params}) {
                     </div>
 
                     <Tabs defaultValue="profile" className="" >
-                        <TabsList className="gap-6 flex flex-wrap bg-orange-500/10 h-auto items-start justify-start pt-3 pb-3 px-3">
+                        <TabsList className="gap-6 flex flex-wrap bg-white border h-auto items-start justify-start pt-3 pb-3 px-3">
                                 <TabsTrigger value="profile" className="flex text-orange-500 border border-orange-500 gap-2 items-center">
                                     <User size={16} />
                                     <span className='lg:block hidden '>Profile Details</span>  
